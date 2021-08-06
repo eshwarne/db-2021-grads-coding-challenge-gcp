@@ -41,6 +41,11 @@ resource "google_sql_database_instance" "db-grads-cloud-sql" {
   settings {
     tier = "db-g1-small"
     availability_type = "REGIONAL"
+   backup_configuration {
+     enabled = true
+     binary_log_enabled = true
+     
+   }
   }
 }
 
