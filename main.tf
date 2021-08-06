@@ -40,6 +40,10 @@ resource "google_sql_database_instance" "db-grads-cloud-sql" {
     availability_type = "REGIONAL"
   }
 }
+resource "google_project_service" "project" {
+  service = "sqladmin.googleapis.com"
+}
+
 resource "google_sql_database" "database" {
   count    = 29
   name     = "${random_string.random_five[count.index].result}-db-grads-group-${count.index + 1}"
@@ -51,3 +55,4 @@ resource "google_sql_user" "users" {
   instance = google_sql_database_instance.db-grads-cloud-sql.name
   password = "${random_string.random_seven[count.index].result}"
 }
+
