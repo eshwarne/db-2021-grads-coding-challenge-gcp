@@ -16,7 +16,10 @@ terraform {
     }
   }
 }
-
+variable "gcp_apis" {
+ type = list(string)
+ default=["serviceusage.googleapis.com","logging.googleapis.com", "sql-component.googleapis.com", "cloudresourcemanager.googleapis.com", "sqladmin.googleapis.com"]
+}
 provider "google" {
  project = var.project-id-grad-one
  credentials = var.grad-one-service-account
@@ -40,8 +43,10 @@ resource "google_sql_database_instance" "db-grads-cloud-sql" {
     availability_type = "REGIONAL"
   }
 }
+
 resource "google_project_service" "project" {
-  service = "sqladmin.googleapis.com"
+  for_each = var.gcp_apis
+  service = each.value  
 }
 
 resource "google_sql_database" "database" {
