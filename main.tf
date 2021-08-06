@@ -22,7 +22,13 @@ provider "google" {
  credentials = var.grad-one-service-account
 }
 resource "random_string" "random_five" {
+  count = 29
   length = 5
+  number = false
+}
+resource "random_string" "random_seven" {
+  count = 29
+  length = 7
   number = false
 }
 resource "google_sql_database_instance" "db-grads-cloud-sql" {
@@ -36,12 +42,12 @@ resource "google_sql_database_instance" "db-grads-cloud-sql" {
 }
 resource "google_sql_database" "database" {
   count    = 29
-  name     = "${random_string.random_five.result}-db-grads-group-${count.index + 1}"
+  name     = "${random_string.random_five[count.index].result}-db-grads-group-${count.index + 1}"
   instance = google_sql_database_instance.db-grads-cloud-sql.name
 }
 resource "google_sql_user" "users" {
   count = 29
-  name     = "${random_string.random_five.result}-group-${count.index + 1}"
+  name     = "${random_string.random_five[count.index].result}-group-${count.index + 1}"
   instance = google_sql_database_instance.db-grads-cloud-sql.name
-  password = "${random_string.random_five.result}"
+  password = "${random_string.random_seven[count.index].result.result}"
 }
