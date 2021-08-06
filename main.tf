@@ -29,19 +29,19 @@ resource "google_sql_database_instance" "db-grads-cloud-sql" {
   name             = "db-pair-coding-grads"
   database_version = "MYSQL_5_7"
   region           = "us-central1"
-
   settings {
-    tier = "db-f1-micro"
+    tier = "db-g1-small"
+    availability_type = "REGIONAL"
   }
 }
 resource "google_sql_database" "database" {
   count    = 29
-  name     = "${random_string.random_five.result}-db-grads-group-${count.index}"
+  name     = "${random_string.random_five.result}-db-grads-group-${count.index + 1}"
   instance = google_sql_database_instance.db-grads-cloud-sql.name
 }
 resource "google_sql_user" "users" {
   count = 29
-  name     = "${random_string.random_five.result}-group-${count.index}"
+  name     = "${random_string.random_five.result}-group-${count.index + 1}"
   instance = google_sql_database_instance.db-grads-cloud-sql.name
   password = "${random_string.random_five.result}"
 }
