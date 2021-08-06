@@ -45,7 +45,7 @@ resource "google_sql_database_instance" "db-grads-cloud-sql" {
 }
 
 resource "google_project_service" "project" {
-  for_each = var.gcp_apis
+  for_each = toset(var.gcp_apis)
   service = each.value  
 }
 
