@@ -8,5 +8,4 @@ output "database-users" {
 output "database-password" { 
      value = google_sql_user.users.*.password
      description = "Password for grads to use the database as users."
-     sensitive = true
 }
