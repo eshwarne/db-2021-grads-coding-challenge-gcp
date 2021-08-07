@@ -65,6 +65,6 @@ resource "google_sql_user" "users" {
   count = 29
   name     = "${random_string.random_five[count.index].result}-group-${count.index + 1}"
   instance = google_sql_database_instance.db-grads-cloud-sql.name
-  password = "${var.list-of-29-passwords[count.index].result}"
+  password = "${var.list-of-29-passwords[count.index]}"
 }
 
