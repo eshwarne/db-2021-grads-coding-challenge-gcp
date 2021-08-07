@@ -42,7 +42,7 @@ resource "google_project_service" "project" {
   service = each.value  
 }
 # resource "google_sql_database_instance" "db-grads-cloud-sql" {
-#   name             = "db-pair-coding-grads"
+#   name             = "db-coding-grads-v1"
 #   database_version = "MYSQL_5_7"
 #   region           = "us-central1"
 #   settings {
