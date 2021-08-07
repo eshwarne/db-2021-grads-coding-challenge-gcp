@@ -78,7 +78,14 @@ jobs:
 
       # Generates an execution plan for Terraform
       - name: Terraform rm
-        run: terraform state list
+        run:
+          terraform state rm google_sql_database
+          # Generates an execution plan for Terraform
+      - name: Terraform rm users
+        run: terraform state rm google_sql_user
+
+      - name: Terraform rm instance
+        run: terraform state rm google_sql_database_instance
 
         # On push to main, build or change infrastructure according to Terraform configuration files
         # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
