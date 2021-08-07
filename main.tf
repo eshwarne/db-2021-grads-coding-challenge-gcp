@@ -36,35 +36,35 @@ resource "random_string" "random_seven" {
   number = false
   special = false
 }
-resource "google_sql_database_instance" "db-grads-cloud-sql" {
-  name             = "db-pair-coding-grads"
-  database_version = "MYSQL_5_7"
-  region           = "us-central1"
-  settings {
-    tier = "db-g1-small"
-    availability_type = "REGIONAL"
-   backup_configuration {
-     enabled = true
-     binary_log_enabled = true
-     
-   }
-  }
-}
 
 resource "google_project_service" "project" {
   for_each = toset(var.gcp_apis)
   service = each.value  
 }
+# resource "google_sql_database_instance" "db-grads-cloud-sql" {
+#   name             = "db-pair-coding-grads"
+#   database_version = "MYSQL_5_7"
+#   region           = "us-central1"
+#   settings {
+#     tier = "db-g1-small"
+#     availability_type = "REGIONAL"
+#    backup_configuration {
+#      enabled = true
+#      binary_log_enabled = true
+     
+#    }
+#   }
+# }
 
-resource "google_sql_database" "database" {
-  count    = 29
-  name     = "${random_string.random_five[count.index].result}-db-grads-group-${count.index + 1}"
-  instance = google_sql_database_instance.db-grads-cloud-sql.name
-}
-resource "google_sql_user" "users" {
-  count = 29
-  name     = "${random_string.random_five[count.index].result}-group-${count.index + 1}"
-  instance = google_sql_database_instance.db-grads-cloud-sql.name
-  password = "${random_string.random_seven[count.index].result}"
-}
+# resource "google_sql_database" "database" {
+#   count    = 29
+#   name     = "${random_string.random_five[count.index].result}-db-grads-group-${count.index + 1}"
+#   instance = google_sql_database_instance.db-grads-cloud-sql.name
+# }
+# resource "google_sql_user" "users" {
+#   count = 29
+#   name     = "${random_string.random_five[count.index].result}-group-${count.index + 1}"
+#   instance = google_sql_database_instance.db-grads-cloud-sql.name
+#   password = "${var.list-of-29-passwords[count.index].result}"
+# }
 

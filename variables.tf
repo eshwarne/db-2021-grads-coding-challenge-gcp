@@ -7,3 +7,7 @@ variable "project-id-grad-two" {
 variable "grad-one-service-account"{
     type = string
 }
+
+variable "list-of-29-passwords"{
+  type = list(string)
+}
