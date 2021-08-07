@@ -76,7 +76,7 @@ jobs:
       - name: Terraform Init
         run: terraform init
       - name: Terraform rm
-        run: terraform state rm list
+        run: terraform state list
       # Generates an execution plan for Terraform
       - name: Terraform rm
         run:
