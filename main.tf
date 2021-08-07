@@ -28,14 +28,21 @@ resource "random_string" "random_five" {
   count = 29
   length = 5
   number = false
+  special = false
 }
 resource "random_string" "random_seven" {
   count = 29
   length = 7
   number = false
+  special = false
+}
+
+resource "google_project_service" "project" {
+  for_each = toset(var.gcp_apis)
+  service = each.value  
 }
 resource "google_sql_database_instance" "db-grads-cloud-sql" {
-  name             = "db-pair-coding-grads"
+  name             = "db-coding-grads-v1"
   database_version = "MYSQL_5_7"
   region           = "us-central1"
   settings {
@@ -49,11 +56,6 @@ resource "google_sql_database_instance" "db-grads-cloud-sql" {
   }
 }
 
-resource "google_project_service" "project" {
-  for_each = toset(var.gcp_apis)
-  service = each.value  
-}
-
 resource "google_sql_database" "database" {
   count    = 29
   name     = "${random_string.random_five[count.index].result}-db-grads-group-${count.index + 1}"
@@ -63,6 +65,6 @@ resource "google_sql_user" "users" {
   count = 29
   name     = "${random_string.random_five[count.index].result}-group-${count.index + 1}"
   instance = google_sql_database_instance.db-grads-cloud-sql.name
-  password = "${random_string.random_seven[count.index].result}"
+  password = "${var.list-of-29-passwords[count.index]}"
 }
 
