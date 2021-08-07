@@ -25,11 +25,13 @@ resource "random_string" "random_five" {
   count = 29
   length = 5
   number = false
+  special = false
 }
 resource "random_string" "random_seven" {
   count = 29
   length = 7
   number = false
+  special = false
 }
 resource "google_sql_database_instance" "db-grads-cloud-sql" {
   name             = "db-pair-coding-grads"
